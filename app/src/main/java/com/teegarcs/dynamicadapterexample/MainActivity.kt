@@ -21,23 +21,25 @@ class MainActivity : AppCompatActivity(), ClickLabelAction {
         binding.sampleRecyclerView.layoutManager = LinearLayoutManager(this)
         val list = ArrayList<DynamicModel>()
 
-        for (i in 0..10) {
-            list.add(SampleLabelModel("Row Number $i"))
-        }
+        for (i in 1..50) {
+            if (i % 2 == 0) {
+                list.add(SampleLabelModel("Standard Row: $i"))
+            } else {
+                list.add(SampleClickableLabelModel("Clickable Row: $i", this))
+            }
 
-        for (i in 0..20) {
-            list.add(SampleClickableLabelModel("Row Number $i"))
         }
-
 
         // Demo of the items being updated leveraging LD and not item changed called.
+        // Will only change the even rows.
         Handler().postDelayed({
             list.forEachIndexed { index, dynamicBindingModel ->
-                (dynamicBindingModel as SampleLabelModel).labelLD.value = "Row Number Update $index"
+                (dynamicBindingModel as? SampleLabelModel)?.labelLD?.value =
+                    "Standard Row Update $index"
             }
         }, 5000)
 
-        val adapter = DynamicAdapter(this, items = list)
+        val adapter = DynamicAdapter(list)
         binding.sampleRecyclerView.adapter = adapter
         //observe the activity lifecycle
         lifecycle.addObserver(adapter)

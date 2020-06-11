@@ -1,8 +1,8 @@
 package com.teegarcs.dynamicadapterexample
 
-import com.teegarcs.dynamicadapter.DynamicAdapterActionCallback
+import com.teegarcs.dynamicadapter.DynamicModelActionCallback
 
-interface ClickLabelAction : DynamicAdapterActionCallback {
+interface ClickLabelAction : DynamicModelActionCallback {
 
     fun printRow(label: String?)
 }

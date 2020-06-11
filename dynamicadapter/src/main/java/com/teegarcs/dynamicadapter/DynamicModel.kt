@@ -12,16 +12,11 @@ import androidx.lifecycle.LifecycleRegistry
  * This provides a lifecycle owner so that LiveData and DataBinding can be used. The Lifecycle
  * is managed by the adapter based on the status of the view being attached to the recyclerview or
  * not
+ *
  */
-abstract class DynamicModel : LifecycleOwner {
+abstract class DynamicModel() : LifecycleOwner {
 
     private val lifecycleRegistry: LifecycleRegistry by lazy { LifecycleRegistry(this) }
-
-    /**
-     * action callback to be overridden so that a callback can be provided for interaction
-     * between model and fragment/activity.
-     */
-    private var adapterAction: DynamicAdapterActionCallback? = null
 
     /**
      * Called during the onBind of a ViewHolder. The Super will take care of binding the
@@ -34,15 +29,15 @@ abstract class DynamicModel : LifecycleOwner {
      * type="com.teegarcs.dynamicadapter.DynamicModel" />
      *
      * <variable
-     * name="adapterAction"
-     * type="com.teegarcs.dynamicadapter.DynamicAdapterActionCallback" />
+     * name="modelAction"
+     * type="com.teegarcs.dynamicadapter.DynamicModelActionCallback" />
      *
      * @param binding - the ViewBinding being bound to this model.
      */
     open fun bindVariables(binding: ViewDataBinding) {
         binding.lifecycleOwner = this
         binding.setVariable(BR.model, this)
-        binding.setVariable(BR.adapterAction, adapterAction)
+        binding.setVariable(BR.adapterAction, getModelActionCallback())
     }
 
 
@@ -71,12 +66,11 @@ abstract class DynamicModel : LifecycleOwner {
         return lifecycleRegistry
     }
 
-    fun setAdapterActionCallback(adapterAction: DynamicAdapterActionCallback?) {
-        this.adapterAction = adapterAction
-    }
-
-    @Suppress("UNCHECKED_CAST")
-    fun <T : DynamicAdapterActionCallback> getAdapterAction(): T? {
-        return adapterAction as? T
+    /**
+     * DynamicModelActionCallback - optional callback for actions that need to be passed up
+     * to a fragment or activity
+     */
+    open fun getModelActionCallback(): DynamicModelActionCallback? {
+        return null
     }
 }

@@ -18,13 +18,10 @@ import java.util.*
  * observer to the Activity/Fragment Lifecycle. This is helpful for maintaining the status of the
  * recyclerview.
  *
- * @property dynamicAdapterActionCallback - optional callback for actions that need to be passed up
- * to a fragment or activity.
  * @property items - list of classes extending [DynamicModel] that will be shown on the recyclerview
  */
 class DynamicAdapter(
-    private val dynamicAdapterActionCallback: DynamicAdapterActionCallback? = null,
-    private val items: ArrayList<DynamicModel>
+    val items: ArrayList<DynamicModel>
 ) :
     RecyclerView.Adapter<DynamicModelViewHolder>(), LifecycleEventObserver {
 
@@ -53,8 +50,6 @@ class DynamicAdapter(
     ) {
         if (payloads.isNotEmpty())
             return
-
-        items[position].setAdapterActionCallback(dynamicAdapterActionCallback)
 
         DataBindingUtil.getBinding<ViewDataBinding>(holder.itemView)?.let {
             items[position].bindVariables(it)
@@ -110,9 +105,8 @@ class DynamicAdapter(
                 val iterator = resumedSet.iterator()
                 while (iterator.hasNext()) {
                     val position = iterator.next()
-                    items.getOrNull(position)?.let {
-                        it.getLifecycleRegistry().handleLifecycleEvent(event)
-                    } ?: iterator.remove()
+                    items.getOrNull(position)?.getLifecycleRegistry()?.handleLifecycleEvent(event)
+                        ?: iterator.remove()
                 }
             }
         }

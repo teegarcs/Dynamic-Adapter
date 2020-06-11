@@ -9,7 +9,7 @@
 
         <variable
             name="adapterAction"
-            type="com.teegarcs.dynamicadapter.DynamicAdapterActionCallback" />
+            type="com.teegarcs.dynamicadapter.DynamicModelActionCallback" />
     </data>
 
 

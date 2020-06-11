@@ -8,7 +8,14 @@
         in your model class-->
         <variable
             name="model"
-            type="com.teegarcs.dynamicadapterexample.SampleLabelModel" />
+            type="com.teegarcs.dynamicadapterexample.SampleClickableLabelModel" />
+
+        <!-- To Automatically receive the adapterAction here, it must be named as below.
+        A custom name can be provided but bindVariables() would need to be overridden
+        in your model class-->
+        <variable
+            name="adapterAction"
+            type="com.teegarcs.dynamicadapterexample.ClickLabelAction" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -20,6 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{model.labelLD}"
+            android:onClick="@{() -> adapterAction.printRow(model.labelLD)}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
