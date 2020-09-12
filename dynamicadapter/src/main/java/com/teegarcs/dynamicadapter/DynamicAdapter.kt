@@ -21,7 +21,7 @@ import java.util.*
  * @property items - list of classes extending [DynamicModel] that will be shown on the recyclerview
  */
 class DynamicAdapter(
-    val items: ArrayList<DynamicModel>
+    val items: ArrayList<out DynamicModel>
 ) :
     RecyclerView.Adapter<DynamicModelViewHolder>(), LifecycleEventObserver {
 
