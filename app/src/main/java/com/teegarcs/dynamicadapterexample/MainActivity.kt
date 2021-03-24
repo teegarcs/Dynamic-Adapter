@@ -1,14 +1,15 @@
 package com.teegarcs.dynamicadapterexample
 
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.teegarcs.dynamicadapter.DynamicAdapter
 import com.teegarcs.dynamicadapter.DynamicModel
 import com.teegarcs.dynamicadapterexample.databinding.ActivityMainBinding
+import kotlinx.coroutines.delay
 import java.util.*
 
 class MainActivity : AppCompatActivity(), ClickLabelAction {
@@ -32,12 +33,13 @@ class MainActivity : AppCompatActivity(), ClickLabelAction {
 
         // Demo of the items being updated leveraging LD and not item changed called.
         // Will only change the even rows.
-        Handler().postDelayed({
+        lifecycleScope.launchWhenResumed {
+            delay(5000)
             list.forEachIndexed { index, dynamicBindingModel ->
                 (dynamicBindingModel as? SampleLabelModel)?.labelLD?.value =
                     "Standard Row Update $index"
             }
-        }, 5000)
+        }
 
         val adapter = DynamicAdapter(list)
         binding.sampleRecyclerView.adapter = adapter
