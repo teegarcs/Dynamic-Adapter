@@ -1,6 +1,7 @@
 package com.teegarcs.dynamicadapterexample
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -20,11 +21,17 @@ class MainActivity : AppCompatActivity() {
 
         val adapter = DynamicAdapter()
         binding.sampleRecyclerView.adapter = adapter
-        //observe the activity lifecycle
+        // observe the activity lifecycle, this is used for the adapter lifecycle to supplement the view
         lifecycle.addObserver(adapter)
 
+        // observe the list data and set to the adapter as it changes
         viewModel.listContent.observe(this) {
             adapter.submitList(it)
+        }
+
+        // observe the toast message and display to user
+        viewModel.showToast.observe(this) {
+            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
         }
     }
 }

@@ -4,19 +4,26 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.teegarcs.dynamicadapter.DynamicModel
+import com.teegarcs.dynamicadapterexample.util.SingleLiveData
 
 class MainViewModel : ViewModel(), ImageTextButtonActions, CheckBoxAction {
     private val _listContent = MutableLiveData<List<DynamicModel>>().apply { value = listOf() }
     val listContent: LiveData<List<DynamicModel>> = _listContent
+    val showToast = SingleLiveData<String>()
 
     init {
         val listData = mutableListOf<DynamicModel>()
 
+        // This item demos how each recycler item has a lifecycle based on if the view is shown or not
         listData.add(TimerLabelModel())
+
+        // these items demonstrate how models can be updated without notifying the adapter
         listData.add(CheckBoxModel(this))
         listData.add(CheckBoxModel(this))
         listData.add(CheckBoxModel(this))
         listData.add(CheckBoxModel(this))
+
+        // shows how we can build complex UI with very little code in the model class
         listData.add(
             ImageTextModel(
                 "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1c/04/57/d9/marriott-resort-virginia.jpg?w=900&h=-1&s=1",
@@ -24,6 +31,7 @@ class MainViewModel : ViewModel(), ImageTextButtonActions, CheckBoxAction {
             )
         )
 
+        // demonstrates how to add actions to the model class and remove the items from the list very easily
         listData.add(
             ImageTextWithButtonsModel(
                 "https://bsmedia.business-standard.com/_media/bs/img/article/2020-07/25/full/1595618904-5908.jpg",
@@ -32,7 +40,7 @@ class MainViewModel : ViewModel(), ImageTextButtonActions, CheckBoxAction {
             )
         )
 
-
+        // shows how we can build complex UI with very little code in the model class
         listData.add(
             ImageTextModel(
                 "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMm5N6vcL6IGP6-MW9DTYxDINtYwcLhCpfGA&usqp=CAU",
@@ -40,6 +48,7 @@ class MainViewModel : ViewModel(), ImageTextButtonActions, CheckBoxAction {
             )
         )
 
+        // demonstrates how to add actions to the model class and remove the items from the list very easily
         listData.add(
             ImageTextWithButtonsModel(
                 "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkRMaxRL_zHS6Qz20in4krjpZ077yGYSzmdQ&usqp=CAU",
@@ -48,6 +57,7 @@ class MainViewModel : ViewModel(), ImageTextButtonActions, CheckBoxAction {
             )
         )
 
+        // demonstrates how to add actions to the model class and remove the items from the list very easily
         listData.add(
             ImageTextWithButtonsModel(
                 "https://images.freeimages.com/images/small-previews/adf/sun-burst-1478549.jpg",
@@ -56,6 +66,7 @@ class MainViewModel : ViewModel(), ImageTextButtonActions, CheckBoxAction {
             )
         )
 
+        // demonstrates how to add actions to the model class and remove the items from the list very easily
         listData.add(
             ImageTextWithButtonsModel(
                 "https://cdn.pixabay.com/user/2012/04/01/00-18-38-212_250x250.png",
@@ -64,6 +75,7 @@ class MainViewModel : ViewModel(), ImageTextButtonActions, CheckBoxAction {
             )
         )
 
+        // shows how we can build complex UI with very little code in the model class
         listData.add(
             ImageTextModel(
                 "https://www.everypixel.com/i/free_1.jpg",
@@ -71,6 +83,7 @@ class MainViewModel : ViewModel(), ImageTextButtonActions, CheckBoxAction {
             )
         )
 
+        // demonstrates how to add actions to the model class and remove the items from the list very easily
         listData.add(
             ImageTextWithButtonsModel(
                 "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSM8xBYMab0g-XvZCPneZ7xkTqupmgRxFOOwA&usqp=CAU",
@@ -79,13 +92,14 @@ class MainViewModel : ViewModel(), ImageTextButtonActions, CheckBoxAction {
             )
         )
 
+        // This item demos how each recycler item has a lifecycle based on if the view is shown or not
         listData.add(TimerLabelModel())
 
         _listContent.value = listData
     }
 
     override fun showToast(body: String) {
-
+        showToast.value = body
     }
 
     override fun removeItem(model: ImageTextWithButtonsModel) {
