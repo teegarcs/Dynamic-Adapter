@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <!-- To Automatically receive the model here, it must be named as below.
+        A custom name can be provided but bindVariables() would need to be overridden
+        in your model class-->
+        <variable
+            name="model"
+            type="com.teegarcs.dynamicadapterexample.CheckBoxModel" />
+
+        <!-- To Automatically receive the adapterAction here, it must be named as below.
+       A custom name can be provided but bindVariables() would need to be overridden
+       in your model class-->
+        <variable
+            name="adapterAction"
+            type="com.teegarcs.dynamicadapterexample.CheckBoxAction" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginBottom="8dp"
+        android:background="#ffffff"
+        android:elevation="5dp"
+        android:padding="8dp">
+
+        <CheckBox
+            android:id="@+id/checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="@{model.isChecked()}"
+            android:onCheckedChanged="@{() -> adapterAction.itemChecked(model)}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/sample_label_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Only one item can be selected"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/checkbox"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

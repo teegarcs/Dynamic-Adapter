@@ -5,6 +5,19 @@
       <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" />
     </configurations>
   </component>
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="../../../../../layout/custom_preview.xml" value="0.21458333333333332" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.22826086956521738" />
+        <entry key="app/src/main/res/layout/check_box_layout.xml" value="0.36041666666666666" />
+        <entry key="app/src/main/res/layout/image_text_layout.xml" value="0.22826086956521738" />
+        <entry key="app/src/main/res/layout/image_text_with_buttons_layout.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/sample_clickable_label_view.xml" value="0.22826086956521738" />
+        <entry key="dynamicadapter/src/main/res/layout/dynamic_adapter_generic_vh.xml" value="0.22826086956521738" />
+      </map>
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <!-- To Automatically receive the model here, it must be named as below.
+        A custom name can be provided but bindVariables() would need to be overridden
+        in your model class-->
+        <variable
+            name="model"
+            type="com.teegarcs.dynamicadapterexample.ImageTextWithButtonsModel" />
+
+        <!-- To Automatically receive the adapterAction here, it must be named as below.
+        A custom name can be provided but bindVariables() would need to be overridden
+        in your model class-->
+        <variable
+            name="adapterAction"
+            type="com.teegarcs.dynamicadapterexample.ImageTextButtonActions" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:elevation="5dp"
+        android:foreground="?attr/selectableItemBackground"
+        android:onClick="@{() -> model.swapColor()}"
+        android:padding="16dp"
+        app:colorCode="@{model.backgroundColor}">
+
+        <ImageView
+            android:id="@+id/leftImage"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            app:imageUrl="@{model.imageUrl}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/bodyText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@{model.body}"
+            app:layout_constraintEnd_toStartOf="@id/leftImage"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="some fake text" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/bottomBarrier"
+            android:layout_width="wrap_content"
+            android:layout_height="8dp"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="leftImage,bodyText" />
+
+        <Button
+            android:id="@+id/toastBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:onClick="@{() -> adapterAction.showToast(model.body)}"
+            android:text="Show Toast"
+            app:layout_constraintEnd_toStartOf="@id/removeBtn"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/bottomBarrier" />
+
+        <Button
+            android:id="@+id/removeBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:onClick="@{() -> adapterAction.removeItem(model)}"
+            android:text="Remove Item"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toEndOf="@id/toastBtn"
+            app:layout_constraintTop_toBottomOf="@id/bottomBarrier" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

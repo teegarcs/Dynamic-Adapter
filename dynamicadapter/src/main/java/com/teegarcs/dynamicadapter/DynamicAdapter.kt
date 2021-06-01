@@ -7,8 +7,9 @@ import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import java.util.*
 
 /**
  * Dynamic Adapter that can be used as a one stop shop for all RecyclerViews leveraging DataBinding.
@@ -21,9 +22,9 @@ import java.util.*
  * @property items - list of classes extending [DynamicModel] that will be shown on the recyclerview
  */
 class DynamicAdapter(
-    val items: ArrayList<out DynamicModel>
 ) :
-    RecyclerView.Adapter<DynamicModelViewHolder>(), LifecycleEventObserver {
+    ListAdapter<DynamicModel, DynamicModelViewHolder>(DynamicModelDiffCallback),
+    LifecycleEventObserver {
 
     //maintains a list of views that are in "resumed" state
     private val resumedSet = mutableSetOf<Int>()
@@ -37,10 +38,9 @@ class DynamicAdapter(
         ).root
     )
 
-    override fun getItemCount() = items.count()
 
     override fun getItemViewType(position: Int): Int {
-        return items[position].getLayoutId()
+        return getItem(position).getLayoutId()
     }
 
     override fun onBindViewHolder(
@@ -52,21 +52,21 @@ class DynamicAdapter(
             return
 
         DataBindingUtil.getBinding<ViewDataBinding>(holder.itemView)?.let {
-            items[position].bindVariables(it)
+            getItem(position).bindVariables(it)
         }
     }
 
     override fun onBindViewHolder(holder: DynamicModelViewHolder, position: Int) {
-        items[position].getLifecycleRegistry().handleLifecycleEvent(Lifecycle.Event.ON_START)
+        getItem(position).getLifecycleRegistry().handleLifecycleEvent(Lifecycle.Event.ON_START)
     }
 
 
     override fun onViewAttachedToWindow(holder: DynamicModelViewHolder) {
         super.onViewAttachedToWindow(holder)
-        val position = holder.adapterPosition
+        val position = holder.bindingAdapterPosition
 
         if (position != RecyclerView.NO_POSITION) {
-            items[holder.adapterPosition].getLifecycleRegistry()
+            getItem(holder.bindingAdapterPosition).getLifecycleRegistry()
                 .handleLifecycleEvent(Lifecycle.Event.ON_RESUME)
 
             resumedSet.add(position)
@@ -75,10 +75,10 @@ class DynamicAdapter(
 
     override fun onViewDetachedFromWindow(holder: DynamicModelViewHolder) {
         super.onViewDetachedFromWindow(holder)
-        val position = holder.adapterPosition
+        val position = holder.bindingAdapterPosition
 
         if (position != RecyclerView.NO_POSITION) {
-            items[holder.adapterPosition].getLifecycleRegistry()
+            getItem(holder.bindingAdapterPosition).getLifecycleRegistry()
                 .handleLifecycleEvent(Lifecycle.Event.ON_PAUSE)
 
             resumedSet.remove(position)
@@ -87,10 +87,10 @@ class DynamicAdapter(
 
     override fun onViewRecycled(holder: DynamicModelViewHolder) {
         super.onViewRecycled(holder)
-        val position = holder.adapterPosition
+        val position = holder.bindingAdapterPosition
 
         if (position != RecyclerView.NO_POSITION) {
-            items[holder.adapterPosition].getLifecycleRegistry()
+            getItem(holder.bindingAdapterPosition).getLifecycleRegistry()
                 .handleLifecycleEvent(Lifecycle.Event.ON_STOP)
 
             resumedSet.remove(position)
@@ -105,10 +105,21 @@ class DynamicAdapter(
                 val iterator = resumedSet.iterator()
                 while (iterator.hasNext()) {
                     val position = iterator.next()
-                    items.getOrNull(position)?.getLifecycleRegistry()?.handleLifecycleEvent(event)
+                    currentList.getOrNull(position)?.getLifecycleRegistry()
+                        ?.handleLifecycleEvent(event)
                         ?: iterator.remove()
                 }
             }
+        }
+    }
+
+    object DynamicModelDiffCallback : DiffUtil.ItemCallback<DynamicModel>() {
+        override fun areItemsTheSame(oldItem: DynamicModel, newItem: DynamicModel): Boolean {
+            return oldItem.getLayoutId() == newItem.getLayoutId()
+        }
+
+        override fun areContentsTheSame(oldItem: DynamicModel, newItem: DynamicModel): Boolean {
+            return oldItem.hashCode() == newItem.hashCode()
         }
     }
 }
