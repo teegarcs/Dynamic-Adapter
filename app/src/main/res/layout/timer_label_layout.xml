@@ -8,7 +8,7 @@
         in your model class-->
         <variable
             name="model"
-            type="com.teegarcs.dynamicadapterexample.TimerLabelModel" />
+            type="com.teegarcs.dynamicadapterexample.adapter_models.TimerLabelModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

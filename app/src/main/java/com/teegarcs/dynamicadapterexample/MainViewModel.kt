@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.teegarcs.dynamicadapter.DynamicModel
+import com.teegarcs.dynamicadapterexample.adapter_models.*
 import com.teegarcs.dynamicadapterexample.util.SingleLiveData
 
 class MainViewModel : ViewModel(), ImageTextButtonActions, CheckBoxAction {
