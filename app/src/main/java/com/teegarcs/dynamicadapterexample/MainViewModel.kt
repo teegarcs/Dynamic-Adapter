@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.teegarcs.dynamicadapter.DynamicModel
 import com.teegarcs.dynamicadapterexample.adapter_models.*
+import com.teegarcs.dynamicadapterexample.adapter_models.carousel.HorizontalCarouselModel
 import com.teegarcs.dynamicadapterexample.util.SingleLiveData
 
 class MainViewModel : ViewModel(), ImageTextButtonActions, CheckBoxAction {
@@ -58,6 +59,19 @@ class MainViewModel : ViewModel(), ImageTextButtonActions, CheckBoxAction {
             )
         )
 
+        // Horizontal Carousel with nested recycler view and adapter. This one has images in different order from one below.
+        listData.add(
+            HorizontalCarouselModel(
+                listOf(
+                    "https://images.freeimages.com/images/small-previews/adf/sun-burst-1478549.jpg",
+                    "https://www.everypixel.com/i/free_1.jpg",
+                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSM8xBYMab0g-XvZCPneZ7xkTqupmgRxFOOwA&usqp=CAU",
+                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkRMaxRL_zHS6Qz20in4krjpZ077yGYSzmdQ&usqp=CAU",
+                    "https://cdn.pixabay.com/user/2012/04/01/00-18-38-212_250x250.png"
+                )
+            )
+        )
+
         // demonstrates how to add actions to the model class and remove the items from the list very easily
         listData.add(
             ImageTextWithButtonsModel(
@@ -95,6 +109,19 @@ class MainViewModel : ViewModel(), ImageTextButtonActions, CheckBoxAction {
 
         // This item demos how each recycler item has a lifecycle based on if the view is shown or not
         listData.add(TimerLabelModel())
+
+        // Horizontal Carousel with nested recycler view and adapter. This one has images in different order from one above.
+        listData.add(
+            HorizontalCarouselModel(
+                listOf(
+                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSM8xBYMab0g-XvZCPneZ7xkTqupmgRxFOOwA&usqp=CAU",
+                    "https://cdn.pixabay.com/user/2012/04/01/00-18-38-212_250x250.png",
+                    "https://www.everypixel.com/i/free_1.jpg",
+                    "https://images.freeimages.com/images/small-previews/adf/sun-burst-1478549.jpg",
+                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkRMaxRL_zHS6Qz20in4krjpZ077yGYSzmdQ&usqp=CAU"
+                )
+            )
+        )
 
         _listContent.value = listData
     }

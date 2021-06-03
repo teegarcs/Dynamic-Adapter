@@ -42,7 +42,7 @@
             android:id="@+id/bodyText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             android:text="@{model.body}"
             app:layout_constraintEnd_toStartOf="@id/leftImage"
             app:layout_constraintStart_toStartOf="parent"

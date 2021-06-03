@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <!-- To Automatically receive the model here, it must be named as below.
+        A custom name can be provided but bindVariables() would need to be overridden
+        in your model class-->
+        <variable
+            name="model"
+            type="com.teegarcs.dynamicadapterexample.adapter_models.carousel.HorizontalItemModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginRight="16dp"
+        android:elevation="5dp">
+
+        <ImageView
+            android:id="@+id/leftImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            app:imageUrl="@{model.imageUrl}" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
