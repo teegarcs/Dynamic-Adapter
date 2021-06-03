@@ -8,14 +8,14 @@
         in your model class-->
         <variable
             name="model"
-            type="com.teegarcs.dynamicadapterexample.CheckBoxModel" />
+            type="com.teegarcs.dynamicadapterexample.adapter_models.CheckBoxModel" />
 
         <!-- To Automatically receive the adapterAction here, it must be named as below.
        A custom name can be provided but bindVariables() would need to be overridden
        in your model class-->
         <variable
             name="adapterAction"
-            type="com.teegarcs.dynamicadapterexample.CheckBoxAction" />
+            type="com.teegarcs.dynamicadapterexample.adapter_models.CheckBoxAction" />
 
     </data>
 

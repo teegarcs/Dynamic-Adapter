@@ -1,8 +1,9 @@
-package com.teegarcs.dynamicadapterexample
+package com.teegarcs.dynamicadapterexample.adapter_models
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
 import com.teegarcs.dynamicadapter.DynamicModel
+import com.teegarcs.dynamicadapterexample.R
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 

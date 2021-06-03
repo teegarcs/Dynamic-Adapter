@@ -8,27 +8,25 @@
         in your model class-->
         <variable
             name="model"
-            type="com.teegarcs.dynamicadapterexample.adapter_models.TimerLabelModel" />
+            type="com.teegarcs.dynamicadapterexample.adapter_models.carousel.HorizontalCarouselModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:background="#ffffff"
+        android:background="@android:color/white"
         android:elevation="5dp">
 
-        <TextView
-            android:id="@+id/sample_label_text"
-            android:layout_width="wrap_content"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/horizontalRecycler"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@{model.labelLD}"
-            android:textSize="24sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:clipToPadding="false"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </layout>

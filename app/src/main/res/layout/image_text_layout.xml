@@ -9,7 +9,7 @@
         in your model class-->
         <variable
             name="model"
-            type="com.teegarcs.dynamicadapterexample.ImageTextModel" />
+            type="com.teegarcs.dynamicadapterexample.adapter_models.ImageTextModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

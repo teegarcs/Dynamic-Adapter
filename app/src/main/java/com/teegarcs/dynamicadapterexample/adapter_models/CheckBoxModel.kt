@@ -1,9 +1,10 @@
-package com.teegarcs.dynamicadapterexample
+package com.teegarcs.dynamicadapterexample.adapter_models
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.teegarcs.dynamicadapter.DynamicModel
 import com.teegarcs.dynamicadapter.DynamicModelActionCallback
+import com.teegarcs.dynamicadapterexample.R
 
 class CheckBoxModel(private val actions: CheckBoxAction) : DynamicModel() {
     private val _isChecked = MutableLiveData<Boolean>().apply { value = false }
@@ -19,7 +20,5 @@ class CheckBoxModel(private val actions: CheckBoxAction) : DynamicModel() {
 }
 
 interface CheckBoxAction : DynamicModelActionCallback {
-
     fun itemChecked(model: CheckBoxModel)
-
 }

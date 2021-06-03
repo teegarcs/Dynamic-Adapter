@@ -1,8 +1,9 @@
-package com.teegarcs.dynamicadapterexample
+package com.teegarcs.dynamicadapterexample.adapter_models
 
 import androidx.lifecycle.MutableLiveData
 import com.teegarcs.dynamicadapter.DynamicModel
 import com.teegarcs.dynamicadapter.DynamicModelActionCallback
+import com.teegarcs.dynamicadapterexample.R
 
 class ImageTextWithButtonsModel(
     val imageUrl: String,
