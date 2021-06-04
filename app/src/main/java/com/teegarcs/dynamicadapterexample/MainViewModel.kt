@@ -126,12 +126,23 @@ class MainViewModel : ViewModel(), ImageTextButtonActions, CheckBoxAction {
         _listContent.value = listData
     }
 
+    fun swapPosition(fromPos: Int, toPos: Int) {
+        _listContent.value = _listContent.value?.moveItem(fromPos, toPos)
+    }
+
     override fun showToast(body: String) {
         showToast.value = body
     }
 
     override fun removeItem(model: ImageTextWithButtonsModel) {
         val filteredList = _listContent.value!!.filter { it != model }
+        _listContent.value = filteredList
+    }
+
+    fun removeItemPosition(indexRemove:Int) {
+        val filteredList = listContent.value!!.filterIndexed { index, dynamicModel ->
+            index!=indexRemove
+        }
         _listContent.value = filteredList
     }
 
@@ -142,4 +153,15 @@ class MainViewModel : ViewModel(), ImageTextButtonActions, CheckBoxAction {
             }
         }
     }
+}
+
+fun <T> List<T>.moveItem(fromPos: Int, toPos: Int): List<T> {
+    val newList = mutableListOf<T>().apply {
+        addAll(this@moveItem)
+    }
+
+    newList.removeAt(fromPos)
+    newList.add(toPos, this[fromPos])
+
+    return newList
 }
