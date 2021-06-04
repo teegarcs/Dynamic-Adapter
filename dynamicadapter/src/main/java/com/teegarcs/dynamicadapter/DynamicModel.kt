@@ -1,5 +1,6 @@
 package com.teegarcs.dynamicadapter
 
+import android.view.View
 import androidx.annotation.LayoutRes
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Lifecycle
@@ -73,4 +74,36 @@ abstract class DynamicModel() : LifecycleOwner {
     open fun getModelActionCallback(): DynamicModelActionCallback? {
         return null
     }
+
+
+    /**
+     * Optional Resource ID that can be used for section headers and sticky headers.
+     * This will be ignored unless you set the DynamicSectionHeader to your RecyclerView as an Item Decorator
+     */
+    @LayoutRes
+    open fun getHeaderLayoutId(): Int? = null
+
+    /**
+     * Override this function if you want to set a specific matcher to be used for indicating
+     * if this is part of a specific section or not. If you want to do something with text,
+     * simply make each section implement, grab the text and add .hashCode()
+     *
+     *  override fun sectionMatcher(): Int {
+     *      return body.substring(0, 1).hashCode()
+     *  }
+     */
+    open fun sectionMatcher(): Int {
+        return getLayoutId()
+    }
+
+    /**
+     * This function gets called right before the header is drawn on the screen.
+     * Find views, set titles, images, colors, etc here.
+     *
+     *  override fun bindHeaderLayout(view: View) {
+     *      super.bindHeaderLayout(view)
+     *      view.findViewById<TextView>(R.id.list_item_section_text).text = body.substring(0, 1)
+     *   }
+     */
+    open fun bindHeaderLayout(view: View) {}
 }

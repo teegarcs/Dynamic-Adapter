@@ -1,5 +1,7 @@
 package com.teegarcs.dynamicadapterexample.adapter_models
 
+import android.view.View
+import android.widget.TextView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.teegarcs.dynamicadapter.DynamicModel
@@ -16,6 +18,17 @@ class CheckBoxModel(private val actions: CheckBoxAction) : DynamicModel() {
 
     fun setIsChecked(checked: Boolean) {
         _isChecked.value = checked
+    }
+
+    override fun getHeaderLayoutId() = R.layout.sample_section_header_one
+
+    override fun sectionMatcher(): Int {
+        return R.layout.check_box_layout
+    }
+
+    override fun bindHeaderLayout(view: View) {
+        super.bindHeaderLayout(view)
+        view.findViewById<TextView>(R.id.list_item_section_text).text = "Please Select One"
     }
 }
 

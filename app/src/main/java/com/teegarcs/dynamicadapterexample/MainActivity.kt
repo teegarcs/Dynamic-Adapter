@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.teegarcs.dynamicadapter.DynamicAdapter
+import com.teegarcs.dynamicadapter.DynamicSectionHeader
+import com.teegarcs.dynamicadapterexample.adapter_models.ImageTextWithButtonsModel
 import com.teegarcs.dynamicadapterexample.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -24,6 +26,7 @@ class MainActivity : AppCompatActivity() {
         // observe the activity lifecycle, this is used for the adapter lifecycle to supplement the view
         lifecycle.addObserver(adapter)
 
+        binding.sampleRecyclerView.addItemDecoration(DynamicSectionHeader(true))
         // observe the list data and set to the adapter as it changes
         viewModel.listContent.observe(this) {
             adapter.submitList(it)
