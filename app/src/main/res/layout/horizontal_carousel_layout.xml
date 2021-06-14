@@ -25,6 +25,7 @@
             android:clipToPadding="false"
             android:orientation="horizontal"
             android:padding="16dp"
+            app:genericItems="@{model.items}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintTop_toTopOf="parent" />
 

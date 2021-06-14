@@ -5,6 +5,9 @@
 
     <data>
 
+        <variable
+            name="viewModel"
+            type="com.teegarcs.dynamicadapterexample.MainViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -16,9 +19,11 @@
             android:id="@+id/sample_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Hello World!"
-            android:padding="8dp"
             android:clipToPadding="false"
+            android:orientation="vertical"
+            android:padding="8dp"
+            app:genericItems="@{viewModel.listContent}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
