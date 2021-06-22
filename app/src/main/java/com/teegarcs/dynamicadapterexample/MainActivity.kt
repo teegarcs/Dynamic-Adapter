@@ -10,8 +10,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.teegarcs.dynamicadapter.DynamicAdapter
+import com.teegarcs.dynamicadapter.DynamicSectionHeader
 import com.teegarcs.dynamicadapterexample.databinding.ActivityMainBinding
-
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,27 +21,17 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        binding.sampleRecyclerView.layoutManager = LinearLayoutManager(this)
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = this
 
-        val adapter = DynamicAdapter()
-        binding.sampleRecyclerView.adapter = adapter
-        // observe the activity lifecycle, this is used for the adapter lifecycle to supplement the view
-        lifecycle.addObserver(adapter)
-
-        //binding.sampleRecyclerView.addItemDecoration(DynamicSectionHeader(true))
-//        binding.sampleRecyclerView.
-//        val itemTouchHelper = ItemTouchHelper(mIth)
+        //add decorator for section headers to the recyclerview
+       // binding.sampleRecyclerView.addItemDecoration(DynamicSectionHeader(true))
         mIth.attachToRecyclerView(binding.sampleRecyclerView)
-        // observe the list data and set to the adapter as it changes
-        viewModel.listContent.observe(this) {
-            adapter.submitList(it)
-        }
 
         // observe the toast message and display to user
         viewModel.showToast.observe(this) {
             Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
         }
-
     }
 
 //    val itemCallback = ItemTouchHelper.SimpleCallback(

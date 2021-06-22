@@ -1,5 +1,6 @@
 package com.teegarcs.dynamicadapterexample.adapter_models
 
+import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.lifecycle.LiveData
@@ -17,6 +18,7 @@ class CheckBoxModel(private val actions: CheckBoxAction) : DynamicModel() {
     override fun getModelActionCallback() = actions
 
     fun setIsChecked(checked: Boolean) {
+        Log.i("****", lifecycle.currentState.toString())
         _isChecked.value = checked
     }
 

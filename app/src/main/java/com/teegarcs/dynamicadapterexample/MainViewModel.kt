@@ -147,10 +147,8 @@ class MainViewModel : ViewModel(), ImageTextButtonActions, CheckBoxAction {
     }
 
     override fun itemChecked(model: CheckBoxModel) {
-        _listContent.value?.forEach {
-            if (it is CheckBoxModel) {
-                it.setIsChecked(it == model)
-            }
+        _listContent.value?.filterIsInstance<CheckBoxModel>()?.forEach {
+            it.setIsChecked(it == model)
         }
     }
 }

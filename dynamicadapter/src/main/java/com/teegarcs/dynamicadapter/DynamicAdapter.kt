@@ -7,9 +7,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.*
 
 /**
  * Dynamic Adapter that can be used as a one stop shop for all RecyclerViews leveraging DataBinding.
@@ -28,6 +26,7 @@ class DynamicAdapter(
 
     //maintains a list of views that are in "resumed" state
     private val resumedSet = mutableSetOf<Int>()
+    private var attachedRecyclerView: RecyclerView? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = DynamicModelViewHolder(
         DataBindingUtil.inflate<ViewDataBinding>(
@@ -52,6 +51,7 @@ class DynamicAdapter(
             return
 
         DataBindingUtil.getBinding<ViewDataBinding>(holder.itemView)?.let {
+            getItem(position).getLifecycleRegistry().handleLifecycleEvent(Lifecycle.Event.ON_START)
             getItem(position).bindVariables(it)
         }
     }
@@ -59,7 +59,6 @@ class DynamicAdapter(
     override fun onBindViewHolder(holder: DynamicModelViewHolder, position: Int) {
         getItem(position).getLifecycleRegistry().handleLifecycleEvent(Lifecycle.Event.ON_START)
     }
-
 
     override fun onViewAttachedToWindow(holder: DynamicModelViewHolder) {
         super.onViewAttachedToWindow(holder)
@@ -77,7 +76,7 @@ class DynamicAdapter(
         super.onViewDetachedFromWindow(holder)
         val position = holder.bindingAdapterPosition
 
-        if (position != RecyclerView.NO_POSITION) {
+        if (shouldPauseStopItem(position)) {
             getItem(holder.bindingAdapterPosition).getLifecycleRegistry()
                 .handleLifecycleEvent(Lifecycle.Event.ON_PAUSE)
 
@@ -89,12 +88,36 @@ class DynamicAdapter(
         super.onViewRecycled(holder)
         val position = holder.bindingAdapterPosition
 
-        if (position != RecyclerView.NO_POSITION) {
+        if (shouldPauseStopItem(position)) {
             getItem(holder.bindingAdapterPosition).getLifecycleRegistry()
                 .handleLifecycleEvent(Lifecycle.Event.ON_STOP)
 
             resumedSet.remove(position)
         }
+    }
+
+    private fun shouldPauseStopItem(position: Int): Boolean {
+        if (position == RecyclerView.NO_POSITION)
+            return false
+
+        (attachedRecyclerView?.layoutManager as? LinearLayoutManager)?.let {
+            val first = it.findFirstVisibleItemPosition()
+            val last = it.findLastVisibleItemPosition()
+
+            return position < first || position > last
+        }
+
+        return true
+    }
+
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+        super.onAttachedToRecyclerView(recyclerView)
+        this.attachedRecyclerView = recyclerView
+    }
+
+    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView)
+        this.attachedRecyclerView = null
     }
 
 
