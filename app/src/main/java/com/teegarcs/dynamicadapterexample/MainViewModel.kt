@@ -126,10 +126,6 @@ class MainViewModel : ViewModel(), ImageTextButtonActions, CheckBoxAction {
         _listContent.value = listData
     }
 
-    fun swapPosition(fromPos: Int, toPos: Int) {
-        _listContent.value = _listContent.value?.moveItem(fromPos, toPos)
-    }
-
     override fun showToast(body: String) {
         showToast.value = body
     }
@@ -139,12 +135,6 @@ class MainViewModel : ViewModel(), ImageTextButtonActions, CheckBoxAction {
         _listContent.value = filteredList
     }
 
-    fun removeItemPosition(indexRemove:Int) {
-        val filteredList = listContent.value!!.filterIndexed { index, dynamicModel ->
-            index!=indexRemove
-        }
-        _listContent.value = filteredList
-    }
 
     override fun itemChecked(model: CheckBoxModel) {
         _listContent.value?.filterIsInstance<CheckBoxModel>()?.forEach {
