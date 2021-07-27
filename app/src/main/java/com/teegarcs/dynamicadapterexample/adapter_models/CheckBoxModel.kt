@@ -2,6 +2,7 @@ package com.teegarcs.dynamicadapterexample.adapter_models
 
 import android.view.View
 import android.widget.TextView
+import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.teegarcs.dynamicadapter.DynamicModel

@@ -135,11 +135,21 @@ class MainViewModel : ViewModel(), ImageTextButtonActions, CheckBoxAction {
         _listContent.value = filteredList
     }
 
+
     override fun itemChecked(model: CheckBoxModel) {
-        _listContent.value?.forEach {
-            if (it is CheckBoxModel) {
-                it.setIsChecked(it == model)
-            }
+        _listContent.value?.filterIsInstance<CheckBoxModel>()?.forEach {
+            it.setIsChecked(it == model)
         }
     }
+}
+
+fun <T> List<T>.moveItem(fromPos: Int, toPos: Int): List<T> {
+    val newList = mutableListOf<T>().apply {
+        addAll(this@moveItem)
+    }
+
+    newList.removeAt(fromPos)
+    newList.add(toPos, this[fromPos])
+
+    return newList
 }

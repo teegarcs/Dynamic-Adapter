@@ -6,6 +6,7 @@ import com.teegarcs.dynamicadapter.DynamicModel
 import com.teegarcs.dynamicadapterexample.R
 
 class ImageTextModel(val imageUrl: String, val body: String) : DynamicModel() {
+    val defaultImage: Int = R.mipmap.ic_launcher
     override fun getLayoutId() = R.layout.image_text_layout
 
     override fun getHeaderLayoutId() = R.layout.sample_section_header_two
