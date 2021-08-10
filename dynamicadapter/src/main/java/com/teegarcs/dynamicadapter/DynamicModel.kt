@@ -43,6 +43,16 @@ abstract class DynamicModel() : LifecycleOwner {
 
 
     /**
+     * Item identifier for use in the DiffUtil to better determine if items/rows are the same.
+     * This would be similar to passing in a unique identifier into the row that won't change
+     * even if the other content changes.
+     *
+     * Defaults to layout ID and the section matcher, which may not be unique but this allows
+     * for us to not have to implement this on items where its not needed.
+     */
+    open fun getItemId(): Int = getLayoutId() + sectionMatcher()
+
+    /**
      * Layout Resource ID for the layout this model will inflate.
      *
      * @return Layout Resource ID

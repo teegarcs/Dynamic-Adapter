@@ -138,7 +138,7 @@ class DynamicAdapter(
 
     object DynamicModelDiffCallback : DiffUtil.ItemCallback<DynamicModel>() {
         override fun areItemsTheSame(oldItem: DynamicModel, newItem: DynamicModel): Boolean {
-            return oldItem.getLayoutId() == newItem.getLayoutId()
+            return oldItem.getItemId() == newItem.getItemId()
         }
 
         override fun areContentsTheSame(oldItem: DynamicModel, newItem: DynamicModel): Boolean {
